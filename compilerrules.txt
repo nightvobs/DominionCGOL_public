@@ -1,0 +1,9 @@
+check if any classes in folder "workspace" declares methods used in this file"
+regex /* -> scanner.peek(2) */ 
+println(object)--> prints all object properties/variables.
+string-> String
+String promt(String message)--> prints the message on a new line, then waits for user input on a new line.
+string.toInt(); --> returns Integer.parseint(String)
+public int coins{private set;} = 0;  --> make a private int and a public int get*propertyname*() method returning the value. 
+private int actions{public get;} = 1; --> make a private int and a public int get*propertyname*() method
+CardCollection --> std  class ()

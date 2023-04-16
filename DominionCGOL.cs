@@ -37,7 +37,7 @@ namespace FridayPartyCGOL
                 globalMethods.handleActionPhase(currentPlayer);// prints everything
 
                 // after actions: treasures
-                while (currentPlayer.getTreasureFromStack(currentPlayer.getHand()).size() != 0) {
+                while (currentPlayer.getTreasureFromStack(currentPlayer.CardsInHand).size() != 0) {
                     gameboard.printBoard();
                     gameboard.getActivePlayer().prettyPrintAll();
                     DomCard TreasureToPlay = currentPlayer.promptPlayTreasure();// choose an actioncard to play
@@ -56,7 +56,7 @@ namespace FridayPartyCGOL
                         break;
                     }
                     currentPlayer.addBuys(-1);
-                    currentPlayer.gainCard(buyThis);
+                    currentPlayer.gainCardtocollection(buyThis, "DiscardPile");
                     currentPlayer.addCoins(-buyThis.getCost());
                 }
                 console.writeln("Turn finnished \nyou discard all cards from play and your hand, and draw 5 new cards");

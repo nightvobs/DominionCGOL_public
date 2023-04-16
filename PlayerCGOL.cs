@@ -3,18 +3,18 @@ namespace FridayPartyCGOL
 {
     public class Player {
         // private int totalVP = 0;
-        public int coins{private set;} = 0;
-        private int actions = 1;
-        private int coffers = 0;
-        private int villagers = 0;
-        private int buys = 1;
+        private int coins{public get; public set;} = 0;
+        private int actions{public get; public set;} = 1;
+        private int coffers{public get; public set;} = 0;
+        private int villagers{public get; public set;} = 0;
+        private int buys{public get; public set;} = 1;
         private CardCollection exileMat;
         private CardCollection CardsInPlay;
         // private CardCollection islandMat;
         // private CardCollection tavernMat;
         // private CardCollection playedThisTurn;
         // private CardCollection forNextTurn;
-        private CardCollection Deck;
+        private CardCollection Deck{public get;}
         private CardCollection DiscardPile;
         private CardCollection CardsInHand;
         private final string name;
@@ -27,10 +27,10 @@ namespace FridayPartyCGOL
             this.exileMat = new CardCollection(new ArrayList<DomCard>());
             this.DiscardPile = new CardCollection(new ArrayList<DomCard>());
             for (int i = 0; i < 7; i++) {
-                this.Deck.addCardToTop(new Copper());
+                this.Deck.addCard(new Copper());
             }
             for (int i = 0; i < 3; i++) {
-                this.Deck.addCardToTop(new Estate());
+                this.Deck.addCard(new Estate());
             }
             this.Deck.shuffle();
             drawXcardsFrom_Deck(5);
@@ -64,26 +64,6 @@ namespace FridayPartyCGOL
             return this.Deck;
         }
 
-        public void setCoins(int amount) {
-            this.coins = amount;
-        }
-
-        public void setVillagers(int amount) {
-            this.villagers = amount;
-        }
-
-        public void setBuys(int amount) {
-            this.buys = amount;
-        }
-
-        public void setCoffers(int amount) {
-            this.coffers = amount;
-        }
-
-        public void setActions(int amount) {
-            this.actions = amount;
-        }
-
         public void addCoins(int amount) {
             this.coins += amount;
         }
@@ -104,26 +84,6 @@ namespace FridayPartyCGOL
             this.actions += amount;
         }
 
-        public int getNumActions() {
-            return this.actions;
-        }
-
-        public int getNumVillagers() {
-            return this.villagers;
-        }
-
-        public int getNumBuys() {
-            return this.buys;
-        }
-
-        public int getNumCoffers() {
-            return this.coffers;
-        }
-
-        public int getNumCoins() {
-            return this.coins;
-        }
-
         // public void addVP(int amount) {
         // this.totalVP += amount;
         // }
@@ -136,7 +96,7 @@ namespace FridayPartyCGOL
 
         public void drawFromDeck() {
             if (this.Deck.size() > 0) {
-                this.CardsInHand.addCardtoBottom(Deck.removeFromTop());
+                this.CardsInHand.addCard(Deck.removeFromTop(), true);
             } else if (this.DiscardPile.size() > 0) {
                 shuffleDiscPileToDeck();
                 drawFromDeck();
@@ -150,7 +110,7 @@ namespace FridayPartyCGOL
         }
 
         public void topDeckCard(DomCard card) {
-            this.Deck.addCardToTop(card);
+            this.Deck.addCard(card);
         }
 
         // public void countAllVP() {
@@ -223,7 +183,7 @@ namespace FridayPartyCGOL
         }
 
         public DomCard DiscardFromTopDeck() {
-            this.DiscardPile.addCardToTop(Deck.removeFromTop());
+            this.DiscardPile.addCard(Deck.removeFromTop());
             return this.DiscardPile.scryThis(1).get(0);
 
         }
@@ -238,16 +198,8 @@ namespace FridayPartyCGOL
             return card;
         }
 
-        public void gainCard(DomCard card) {
-            this.DiscardPile.addCardToTop(card);
-        }
-
-        public void gainToHand(DomCard chosenCard) {
-            this.CardsInHand.addCardtoBottom(chosenCard);
-        }
-
-        public void gainToDeck(DomCard chosenCard) {
-            this.Deck.addCardToTop(chosenCard);
+        public void gainCardtocollection(DomCard card, string collection) {
+            this[collection].addCard(card); //works for DiscardPile, CardsInHand and Deck
         }
 
         public DomCard removeTopDiscard() {
@@ -308,7 +260,7 @@ namespace FridayPartyCGOL
 
         public void playCard(DomCard cardToPlay) {
             removeCardFrom_Hand(cardToPlay);
-            CardsInPlay.addCardToTop(cardToPlay);
+            CardsInPlay.addCard(cardToPlay);
             cardToPlay.play(this);
         }
     }

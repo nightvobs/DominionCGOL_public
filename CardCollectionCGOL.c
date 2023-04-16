@@ -2,7 +2,7 @@
 namespace FridayPartyCGOL
 {
     public Class CardCollection {
-        protected ArrayList<Card> cards;
+        protected ArrayList<Card> cards{public get;}
         // protected Board activeBoard;
         public CardCollection(ArrayList<Card> startingCards) {
 
@@ -30,32 +30,26 @@ namespace FridayPartyCGOL
             return cards.size();
         }
 
-        public void addCard(Card card, boolean toBottom) {
+        public void addCard(Card card, boolean toBottom = false) {
             if (toBottom){
                 cards.add(card);
             }
-            else
-            cards.add(0, card);
-            
+            else{
+                cards.add(0, card);
+            }
         }
 
-        public void addCard(ArrayList<Card> cardsToAdd) {
-            cards.addAll(0, cardsToAdd);
-        }
-        public void addCard(ArrayList<Card> cardsToAdd, boolean toBottom ) {       
-            cards.addAll(0, cardsToAdd);
-        }
-
-        public void addStackTobottom(ArrayList<Card> cardsToAdd) {
-            cards.addAll(cardsToAdd);
+        public void addStack(ArrayList<Card> cardsToAdd, boolean toBottom = false) {
+            if (toBottom){
+                cards.addAll(cardsToAdd);
+            }
+            else{
+                cards.addAll(0, cardsToAdd);
+            }
         }
 
         public void removeCardofType(Card card) {
             cards.remove(card);
-        }
-
-        public ArrayList<Card> GetFullStack() {
-            return cards;
         }
 
         public ArrayList<Card> scryThis(int depth) {
